@@ -30,13 +30,11 @@ exports.handleViolation = async (req, res) => {
             model: vehicleInfo.modelName || '',
             mark: vehicleInfo.markName || '',
             full_photo: req.body.full_photo || '',
-            timestamp: Date.now(), // Current Unix timestamp in milliseconds
+            timestamp: String(Date.now()), // Current Unix timestamp in milliseconds
             longitude: req.body.longitude || '',
             latitude: req.body.latitude || '',
             from: req.body.from || '',
             host_id: req.body.device_id || '' // host_id from device_id
-            // Add 'range' if required by the external service
-            // range: req.body.range || '' // Uncomment if 'range' is needed
         };
 
         // **Log the data being sent to the external service**
@@ -74,6 +72,6 @@ exports.handleViolation = async (req, res) => {
             ...(error.request && { request: error.request })
         });
 
-        res.status(500).json({ message: 'Internal Server Error', error });
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 };
