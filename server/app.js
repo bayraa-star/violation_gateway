@@ -13,7 +13,7 @@ const app = express();
 app.use(cors({
     origin: [
         'http://localhost:3890',
-        'http://103.9.90.140:3890'
+        'http://103.9.90.140:3880'
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true // Allow cookies to be sent along with requests if necessary

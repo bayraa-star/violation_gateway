@@ -12,7 +12,7 @@ exports.handleViolation = async (req, res) => {
         console.info('Received violation data:', req.body);
 
         // Construct the vehicle info URL
-        const vehicleInfoUrl = `http://103.9.90.169:8800/getinfo/${encodeURIComponent(plateNo)}`;
+        const vehicleInfoUrl = `http://localhost:8800/getinfo/${encodeURIComponent(plateNo)}`;
 
         // Fetch vehicle information from the external API
         const response = await axios.get(vehicleInfoUrl);
@@ -41,7 +41,7 @@ exports.handleViolation = async (req, res) => {
         console.info('Data to send to external service:', dataToSend);
 
         // External endpoint
-        const sendEndpoint = 'https://vil.odt.mn/api/service/violation';
+        const sendEndpoint = 'http://localhost:5004/api/service/violation';
 
         // Send HTTP POST request
         const sendResponse = await axios.post(sendEndpoint, dataToSend, {
