@@ -21,10 +21,10 @@ function shutdownWorker(server) {
 
 if (cluster.isMaster) {
   console.log(
-    `Master process is running. Forking for ${Math.min(numCPUs, 2)} CPUs.`
+    `Master process is running. Forking for ${Math.min(numCPUs, 16)} CPUs.`
   ); // Limit workers to 2
 
-  const numWorkers = Math.min(numCPUs, 2); // Adjust the number of workers
+  const numWorkers = Math.min(numCPUs, 16); // Adjust the number of workers
   for (let i = 0; i < numWorkers; i++) {
     cluster.fork();
   }
