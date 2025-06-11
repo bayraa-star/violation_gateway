@@ -12,7 +12,7 @@ exports.handleViolation = async (req, res) => {
         console.info('Received violation data:', req.body);
 
         // Construct the vehicle info URL
-        const vehicleInfoUrl = `http://localhost:8800/getinfo/${encodeURIComponent(plateNo)}`;
+        const vehicleInfoUrl = `https://vil.odt.mn/vehicles/${encodeURIComponent(plateNo)}`;
 
         // Fetch vehicle information from the external API
         const response = await axios.get(vehicleInfoUrl);
