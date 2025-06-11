@@ -9,13 +9,15 @@ exports.handleViolation = async (req, res) => {
             return res.status(400).json({ message: 'plateNo is required.' });
         }
 
+        const upperPlateNo = plateNo.toUpperCase();
+
         console.info('Received violation data:', req.body);
 
         // Construct the vehicle info URL
-        const vehicleInfoUrl = `https://vil.odt.mn/vehicles/${encodeURIComponent(plateNo)}`;
+        const vehicleInfoUrl = `http://localhost:8800/getinfo/${encodeURIComponent(upperPlateNo)}`;
 
         // Fetch vehicle information from the external API
-        const response = await axios.get(vehicleInfoUrl);
+        const response = await axios.get(vehicleInfoUrl, {timeout: 1000});
         const vehicleInfo = response.data;
 
         console.info('Vehicle Info:', vehicleInfo);
@@ -23,7 +25,7 @@ exports.handleViolation = async (req, res) => {
         // Assemble the data to send
         const dataToSend = {
             vin: vehicleInfo.cabinNo || '', // VIN number from cabinNo
-            plate: req.body.plateNo || '',
+            plate: upperPlateNo,
             rfidTag: vehicleInfo.rfidTag || '',
             color: vehicleInfo.colorName || '',
             class: vehicleInfo.className || '',
@@ -56,8 +58,8 @@ exports.handleViolation = async (req, res) => {
         // Send response back to the client
         res.status(200).json({
             message: 'Violation data received and processed successfully.',
-            vehicleInfo: vehicleInfo,
-            externalServiceResponse: sendResponse.data
+            // vehicleInfo: vehicleInfo,
+            // externalServiceResponse: sendResponse.data
         });
     } catch (error) {
         // Enhanced Error Logging
